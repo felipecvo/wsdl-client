@@ -22,7 +22,9 @@ module WSDLClient
                   args[0] = nil
                 end
 
-                result = @driver.__send__(:#{m}, *args, &block).#{m}Result
+                result = @driver.__send__(:#{m}, *args, &block)
+
+                result = #{m}Result if result.respond_to?(:#{m}Result)
 
                 methods = result.methods - SOAP::Mapping::Object.instance_methods
 
